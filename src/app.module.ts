@@ -9,12 +9,14 @@ import { AuthModule } from './model/auth/auth.module';
 import { JwtModuleShared } from './share/jwt/jwt.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './model/auth/auth.guard';
+import { ImageModule } from './model/images/image.module';
 
 @Module({
   imports: [
     UserModule,
     BookModule,
     AuthModule,
+    ImageModule,
     JwtModuleShared,
     ConfigModule.forRoot({ envFilePath: './.env' }),
     MongooseModule.forRootAsync({

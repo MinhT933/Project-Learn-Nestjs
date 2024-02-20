@@ -6,4 +6,6 @@ export class UserDTO {
 
   @ApiProperty({ type: String, default: '123' })
   password: string;
+  @ApiProperty({ type: String, default: 'admin' })
+  role: string;
 }

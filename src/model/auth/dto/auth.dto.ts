@@ -1,6 +1,6 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UserDTO {
+export class AuthDTO {
   @ApiProperty({ type: String, default: 'minht' })
   username: string;
 

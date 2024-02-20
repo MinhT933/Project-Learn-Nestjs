@@ -17,6 +17,8 @@ export class BookEntity {
   Author: String;
   @Prop({ type: String })
   TypeOfBook: String;
+  @Prop({ type: String })
+  NameFileImage: String;
 }
 
 export type BookDocument = BookEntity & Document;

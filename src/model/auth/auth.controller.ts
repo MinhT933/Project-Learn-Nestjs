@@ -1,9 +1,11 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import { ApiCookieAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { UserDTO } from './dto/auth.dto';
+// import { UserDTO } from './dto/auth.dto';
 import { Response } from 'express';
 import { Public } from '../util/contanst';
+import { AuthDTO } from './dto/auth.dto';
+import { UserDTO } from '../user/dto/user.dto';
 
 @Controller('auth')
 @ApiCookieAuth()
@@ -18,7 +20,7 @@ export class AuthController {
   @Public()
   @Post('login')
   async login(
-    @Body() body: UserDTO,
+    @Body() body: AuthDTO,
     @Res({ passthrough: true }) response: Response,
   ) {
     const { access_token } = await this.authService.Login(body);
@@ -31,5 +33,10 @@ export class AuthController {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       })
       .send({ status: 'ok' });
+  }
+
+  @Post('Log-out')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.cookie('access_token', '').send({ message: 'logout success' });
   }
 }

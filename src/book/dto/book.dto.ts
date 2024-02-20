@@ -9,4 +9,6 @@ export class BookDTO {
   Author: String;
   @ApiProperty({ type: String })
   TypeOfBook: String;
+  @ApiProperty({ type: String })
+  NameFileImage: String;
 }

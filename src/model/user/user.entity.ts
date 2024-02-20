@@ -14,6 +14,8 @@ export class UserEntity {
   username: string;
   @Prop({ type: String })
   password: string;
+  @Prop({ type: String })
+  role: string;
 }
 
 export type UserDocument = UserEntity & Document;

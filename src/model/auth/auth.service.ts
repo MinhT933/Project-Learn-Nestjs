@@ -1,8 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Post, Res } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserDTO } from './dto/auth.dto';
+import { AuthDTO } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
+import { UserDTO } from '../user/dto/user.dto';
+import { response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +13,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   //--------------
-  async SignUp({ username, password }: UserDTO): Promise<{ message: string }> {
+  async SignUp({
+    username,
+    password,
+    role,
+  }: UserDTO): Promise<{ message: string }> {
     const userExist = await this.userService.UserExist(username);
     if (userExist) {
       throw new BadRequestException('user existed');
@@ -19,12 +25,12 @@ export class AuthService {
     // tạo một salt ngẫu nhiên
     const salt = await bcrypt.genSalt();
     const hashpass = await bcrypt.hash(password, salt);
-    await this.userService.create({ username, password: hashpass });
+    await this.userService.create({ username, password: hashpass, role });
     return { message: 'Created new account' };
   }
-  async Login({ username, password }: UserDTO) {
+  async Login({ username, password }: AuthDTO) {
     const userExist = await this.userService.UserExist(username);
-    console.log('🚀 ~ AuthService ~ Login ~ userExist:', userExist);
+
     if (!userExist) {
       throw new BadRequestException('user not exist ');
     }
