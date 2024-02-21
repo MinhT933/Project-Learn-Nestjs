@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { File } from 'buffer';
 
 export class BookDTO {
   @ApiProperty({ type: String })
-  BookName: string;
-  @ApiProperty({ type: Number, default: '0000d' })
+  bookName: string;
+  @ApiProperty({ type: Number })
   price: number;
   @ApiProperty({ type: String })
-  Author: String;
+  author: string;
   @ApiProperty({ type: String })
-  TypeOfBook: String;
-  @ApiProperty({ type: String })
-  NameFileImage: String;
+  typeOfBook: string;
+  @ApiProperty()
+  file: any;
 }

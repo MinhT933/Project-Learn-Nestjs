@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
 @Schema({
   collection: 'Book',
   toObject: {
@@ -10,15 +9,15 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class BookEntity {
   @Prop({ type: String })
-  BookName: string;
-  @Prop({ type: Number, default: '0000$' })
+  bookName: string;
+  @Prop({ type: Number })
   price: number;
   @Prop({ type: String })
-  Author: String;
+  author: string;
   @Prop({ type: String })
-  TypeOfBook: String;
+  typeOfBook: string;
   @Prop({ type: String })
-  NameFileImage: String;
+  file: any;
 }
 
 export type BookDocument = BookEntity & Document;

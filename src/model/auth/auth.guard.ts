@@ -30,10 +30,8 @@ export class AuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
-    // console.log('🚀 ~ AuthGuard ~ canActivate ~ request:', request);
 
     const token = this.extractTokenFromHeader(request);
-    // console.log('🚀 ~ AuthGuard ~ canActivate ~ token:', token);
 
     if (!token) {
       throw new UnauthorizedException();
@@ -45,7 +43,6 @@ export class AuthGuard implements CanActivate {
       });
 
       const user = await this.userService.getUserByID(payload.id);
-      console.log('🚀 ~ AuthGuard ~ canActivate ~ user:', user);
 
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
@@ -56,14 +53,6 @@ export class AuthGuard implements CanActivate {
     return true;
   }
   private extractTokenFromHeader(request: Request): string | undefined {
-    console.log(
-      '🚀 ~ AuthGuard ~ extractTokenFromHeader ~ request.cookies:',
-      request.cookies,
-    );
-    console.log(
-      '🚀 ~ AuthGuard ~ extractTokenFromHeader ~ request.cookies.access_token:',
-      request.cookies.access_token,
-    );
     if (request.cookies && request.cookies.access_token) {
       // get cookie from request
       return request.cookies.access_token;
