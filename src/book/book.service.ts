@@ -16,7 +16,7 @@ export class BookService extends ImageService {
 
   async createBook(dto: BookDTO, image: Express.Multer.File) {
     const imageRes = await this.uploadImagetoFirebase(image);
-    console.log('🚀 ~ BookService ~ createBook ~ imageRes:', imageRes);
+
     const book = new this.bookModule({ ...dto, file: imageRes });
     return await book.save();
   }
