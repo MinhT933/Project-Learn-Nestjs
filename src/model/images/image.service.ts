@@ -8,6 +8,7 @@ import { randomUUID } from 'crypto';
 import * as fs from 'fs';
 import { join } from 'path';
 import * as firebase from 'firebase-admin';
+import * as path from 'path';
 //---------
 @Injectable()
 export class ImageService {
@@ -30,7 +31,7 @@ export class ImageService {
     }
   }
 
-  async uploadImagetoFirebase(image: Express.Multer.File): Promise<String> {
+  uploadImagetoFirebase(image: Express.Multer.File) {
     try {
       const uuid = randomUUID();
       const imageName = image.originalname.split('.');
@@ -41,13 +42,33 @@ export class ImageService {
       const bucket = firebase.storage().bucket();
       const file = bucket.file(url);
       const contents = image.buffer;
-      await file.save(contents);
+      file.save(contents);
 
-      return await `https://firebasestorage.googleapis.com/v0/b/${
+      return `https://firebasestorage.googleapis.com/v0/b/${
         bucket.name
       }/o/${encodeURIComponent(url)}?alt=media`;
     } catch (error) {
       throw new HttpException(`${error}`, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async removeImageInFirebase(fileName: string): Promise<void> {
+    try {
+      const fileNameWithoutQuery = fileName.split('?')[0];
+      const fileNameWithoutProtocol = fileNameWithoutQuery.replace(
+        /(^\w+:|^)\/\//,
+        '',
+      );
+      const fileNameWithoutBucket = fileNameWithoutProtocol.replace(
+        `${firebase.storage().bucket().name}.`,
+        '',
+      );
+      const filePath = decodeURIComponent(path.basename(fileNameWithoutBucket));
+      const bucket = firebase.storage().bucket();
+      await bucket.file(filePath).delete();
+    } catch (error) {
+      console.log('🚀 ~ ImageService ~ removeImageInFirebase ~ error:', error);
+      throw new Error('Failed to delete image');
     }
   }
 }

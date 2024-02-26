@@ -10,6 +10,8 @@ import { JwtModuleShared } from './share/jwt/jwt.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './model/auth/auth.guard';
 import { ImageModule } from './model/images/image.module';
+import { OrderModule } from './model/order/order.module';
+import { StripeModule } from './model/stripe/stripe.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { ImageModule } from './model/images/image.module';
     AuthModule,
     ImageModule,
     JwtModuleShared,
+    StripeModule,
+    OrderModule,
     ConfigModule.forRoot({ envFilePath: './.env' }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
