@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { File } from 'buffer';
 
 export class BookDTO {
   @ApiProperty({ type: String })

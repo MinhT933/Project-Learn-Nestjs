@@ -12,6 +12,7 @@ import { AuthGuard } from './model/auth/auth.guard';
 import { ImageModule } from './model/images/image.module';
 import { OrderModule } from './model/order/order.module';
 import { StripeModule } from './model/stripe/stripe.module';
+import { AuctionModule } from './model/auction/auction.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { StripeModule } from './model/stripe/stripe.module';
     ImageModule,
     JwtModuleShared,
     StripeModule,
+    AuctionModule,
     OrderModule,
     ConfigModule.forRoot({ envFilePath: './.env' }),
     MongooseModule.forRootAsync({
@@ -30,6 +32,7 @@ import { StripeModule } from './model/stripe/stripe.module';
       }),
       inject: [ConfigService],
     }),
+
   ],
   controllers: [AppController],
   providers: [

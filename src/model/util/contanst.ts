@@ -8,3 +8,9 @@ export enum TypeOrder {
   ALREADY_PAID = 'ALREADY_PAID',
   CANCEL = 'CANCEL',
 }
+
+export enum typeAuction {
+  PENDING= 'PENDING',
+  START='START',
+  ENDING='ENDING',
+}

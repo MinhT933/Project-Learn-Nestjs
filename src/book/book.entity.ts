@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
 @Schema({
   collection: 'Book',
   toObject: {
