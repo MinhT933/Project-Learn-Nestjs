@@ -13,6 +13,7 @@ import { ImageModule } from './model/images/image.module';
 import { OrderModule } from './model/order/order.module';
 import { StripeModule } from './model/stripe/stripe.module';
 import { AuctionModule } from './model/auction/auction.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuctionModule } from './model/auction/auction.module';
     StripeModule,
     AuctionModule,
     OrderModule,
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: './.env' }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -32,7 +34,6 @@ import { AuctionModule } from './model/auction/auction.module';
       }),
       inject: [ConfigService],
     }),
-
   ],
   controllers: [AppController],
   providers: [

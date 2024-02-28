@@ -16,10 +16,10 @@ export class AuctionCronService {
     private auctionModel: Model<AuctionEntity>,
   ) {}
 
-  @Cron('0 1 * * * *') // Run every 3 seconds
+  @Cron('*/30 * * * * *') // Run every 3 seconds
   async handleAuctionStart() {
     try {
-      console.log('Running auction start cron job after 30s');
+      console.log('Running auction start cron job after 30');
       const auctions = await this.auctionModel.find().exec(); // Fetch all auctions
 
       const nowDate = new Date();
