@@ -1,8 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { DateTimeTransformer } from '../../util/datetime';
+import { Transform } from 'class-transformer';
+
+import { DateTime } from 'luxon';
 
 export class AuctionDto {
+  constructor(data?: Partial<AuctionDto>) {
+    if (data) {
+      Object.assign(this, data);
+    }
+  }
   @ApiProperty({ type: String })
   nameAuction: string;
 
@@ -15,16 +21,11 @@ export class AuctionDto {
   @ApiProperty({ type: String })
   Status: string;
 
-  @ApiProperty({ type: Date })
-  @IsDate()
-  @Transform(({ value }) => DateTimeTransformer.fromJSDate(value), { toClassOnly: true })
-  @Transform(({ value }) => value.toJSDate(), { toPlainOnly: true })
+  @Transform(({ value }) => DateTime.fromISO(value).toJSDate())
+  startTime: Date;
 
-  @ApiProperty({ type: Date })
-  @IsDate()
-  @Transform(({ value }) => DateTimeTransformer.from(value), { toClassOnly: true })
-  @Transform(({ value }) => DateTimeTransformer.to(value), { toPlainOnly: true })
-  endTime: DateTime;
+  @Transform(({ value }) => DateTime.fromISO(value).toJSDate())
+  endTime: Date;
 
   @ApiProperty()
   file: any;

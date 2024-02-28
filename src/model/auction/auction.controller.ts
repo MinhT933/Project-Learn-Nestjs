@@ -1,4 +1,11 @@
-import { BadGatewayException, Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Body,
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuctionService } from './auction.service';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -7,8 +14,7 @@ import { AuctionDto } from './dto/auction.dto';
 @Controller('auction')
 @ApiTags('Auction')
 export class AuctionController {
-  constructor(private auctionService: AuctionService) {
-  }
+  constructor(private auctionService: AuctionService) {}
 
   @Post()
   @ApiConsumes('multipart/form-data')
@@ -20,7 +26,6 @@ export class AuctionController {
         nameAuction: { type: 'string' },
         startingPrice: { type: 'number' },
         endPrice: { type: 'number' },
-        Status: { type: 'string' },
         startTime: { type: 'Date' },
         endTime: { type: 'Date' },
         file: {
@@ -30,10 +35,13 @@ export class AuctionController {
       },
     },
   })
-  async creatAution(@Body() dto: AuctionDto, @UploadedFile() file: Express.Multer.File) {
-    try{
-      return await this.auctionService.createAution(dto,file)
-    }catch(error){
+  async creatAution(
+    @Body() dto: AuctionDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    try {
+      return await this.auctionService.createAuction(dto, file);
+    } catch (error) {
       throw new BadGatewayException({
         message: error.message,
       });

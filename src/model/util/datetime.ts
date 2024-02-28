@@ -2,12 +2,19 @@ import { Type } from 'class-transformer';
 import { IsDate, Validate } from 'class-validator';
 import { DateTime } from 'luxon';
 
+
+
 export class DateTimeTransformer {
-  to(value: DateTime): Date {
-    return value.toJSDate();
+  static from(value: any): Date {
+    if (value instanceof Date) {
+      return value;
+    } else if (typeof value === 'string') {
+      return new Date(value);
+    }
+    return value;
   }
 
-  from(value: Date): DateTime {
-    return DateTime.fromJSDate(value);
+  static to(value: any): Date {
+    return value instanceof Date ? value.toISOString() : value;
   }
 }

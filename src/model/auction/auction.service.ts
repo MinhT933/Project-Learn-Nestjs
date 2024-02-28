@@ -4,6 +4,8 @@ import { AuctionEntity } from './auction.entity';
 import { Model } from 'mongoose';
 import { AuctionDto } from './dto/auction.dto';
 import { ImageService } from '../images/image.service';
+import { typeAuction } from '../util/contanst';
+import * as moment from 'moment';
 
 @Injectable()
 export class AuctionService extends ImageService {
@@ -14,9 +16,25 @@ export class AuctionService extends ImageService {
     super();
   }
 
-  async createAution(dto: AuctionDto, image: Express.Multer.File) {
-    const imageRes = this.uploadImageToServer(image);
-    const aucTion = new this.autionModule({ ...dto, file: imageRes });
-    return await aucTion.save();
+  async createAuction(dto: AuctionDto, image: Express.Multer.File) {
+    const imageRes = this.uploadImagetoFirebase(image);
+    const auction = new this.autionModule({ ...dto, file: imageRes });
+    const startTime = moment(auction.startTime, 'DD/MM/YYYYTHH:mm:ss').toDate();
+    const endTime = moment(auction.endTime, 'DD/MM/YYYYTHH:mm:ss').toDate();
+    const nowDate = new Date();
+    if (startTime > nowDate && endTime > nowDate) {
+      auction.Status = typeAuction.PENDING;
+    } else if (startTime === nowDate && startTime < endTime) {
+      auction.Status = typeAuction.START;
+    } else if (startTime < nowDate && endTime < nowDate) {
+      auction.Status = typeAuction.ENDING;
+    } else if (startTime > nowDate && endTime < nowDate) {
+      auction.Status = typeAuction.START;
+    } else if (nowDate > endTime) {
+      auction.Status = typeAuction.ENDING;
+    } else if (startTime < nowDate && endTime > nowDate) {
+      auction.Status = typeAuction.START;
+    }
+    return await auction.save();
   }
 }
