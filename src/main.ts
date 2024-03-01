@@ -12,16 +12,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000','http://localhost:5173/',
     credentials: true,
   };
 
-  app.enableCors(corsOptions);
-  // app.setGlobalPrefix('v1');
+  app.enableCors( );
+  app.setGlobalPrefix('v1');
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   const config = new DocumentBuilder()
-    // .addBearerAuth()
     .addCookieAuth('optional-session-id')
     .setTitle('book example')
     .setDescription('The information API description')
