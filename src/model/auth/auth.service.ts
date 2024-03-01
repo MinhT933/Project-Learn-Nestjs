@@ -35,7 +35,7 @@ export class AuthService {
       throw new BadRequestException('user not exist ');
     }
     const isMatch = await bcrypt.compare(password, userExist.password);
-    if (isMatch || userExist) {
+    if (isMatch && userExist) {
       const payload = {
         id: userExist._id,
       };
