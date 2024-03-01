@@ -24,10 +24,12 @@ export class AuthService {
     }
     // tạo một salt ngẫu nhiên
     const salt = await bcrypt.genSalt();
-    const hashpass = await bcrypt.hash(password, salt);
+    const hashpass = await await bcrypt.hash(password, salt);
     await this.userService.create({ username, password: hashpass, role });
     return { message: 'Created new account' };
   }
+
+  //-------
   async login({ username, password }: AuthDTO) {
     const userExist = await this.userService.UserExist(username);
 
