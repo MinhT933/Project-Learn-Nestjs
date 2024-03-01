@@ -23,7 +23,7 @@ export class AuthController {
     @Body() body: AuthDTO,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const { access_token } = await this.authService.Login(body);
+    const { access_token } = await this.authService.login(body);
     console.log('login oke');
 
     response

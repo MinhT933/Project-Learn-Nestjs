@@ -28,7 +28,7 @@ export class AuthService {
     await this.userService.create({ username, password: hashpass, role });
     return { message: 'Created new account' };
   }
-  async Login({ username, password }: AuthDTO) {
+  async login({ username, password }: AuthDTO) {
     const userExist = await this.userService.UserExist(username);
 
     if (!userExist) {
