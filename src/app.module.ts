@@ -14,6 +14,7 @@ import { OrderModule } from './model/order/order.module';
 import { StripeModule } from './model/stripe/stripe.module';
 import { AuctionModule } from './model/auction/auction.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TrpcModule } from './model/trpc/trpc.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     ImageModule,
     JwtModuleShared,
+    TrpcModule,
     StripeModule,
     AuctionModule,
     OrderModule,

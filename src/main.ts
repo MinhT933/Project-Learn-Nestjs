@@ -5,10 +5,18 @@ import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as firebaseAdmin from 'firebase-admin';
 import { ConfigService } from '@nestjs/config';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import { TrpcRouter } from './model/trpc/trpc.router';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  const corsOptions: CorsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+  };
 
+  app.enableCors(corsOptions);
   // app.setGlobalPrefix('v1');
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
@@ -40,7 +48,8 @@ async function bootstrap() {
   SwaggerModule.setup('/swagger/api', app, document);
   // if (environment !== 'production') {
   // }
-
+  const trpc = app.get(TrpcRouter);
+  trpc.applyMiddleware(app);
   await app.listen(process.env.PORT || 3000);
 
   console.log(`Application running at ${process.env.PORT}`);

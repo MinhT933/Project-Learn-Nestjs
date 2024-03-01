@@ -24,6 +24,7 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const { access_token } = await this.authService.Login(body);
+    console.log('login oke');
 
     response
       .cookie('access_token', access_token, {
