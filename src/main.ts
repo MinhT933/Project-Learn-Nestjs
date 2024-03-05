@@ -9,7 +9,7 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { TrpcRouter } from './model/trpc/trpc.router';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors({
     origin: 'http://localhost:3000', // Replace with the URL of your Next.js server
     credentials: true, // Enable credentials to allow sending cookies

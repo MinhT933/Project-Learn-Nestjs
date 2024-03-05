@@ -27,7 +27,6 @@ import { AllExceptionsFilter } from './http-exception.filter';
     TrpcModule,
     StripeModule,
     AuctionModule,
-
     OrderModule,
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: './.env' }),
